@@ -11,6 +11,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
+  config.vm.box = "chef/centos-6.5"
+
   config.vm.box_url = "https://vagrantcloud.com/nrel/CentOS-6.5-x86_64/version/4/provider/virtualbox.box"
 
   config.vm.define "controller" do |controller|
@@ -25,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vbox.customize ["modifyvm", :id, "--cpus", 1]
   end
 
-    config.vm.define "compute" do |compute|
+  config.vm.define "compute" do |compute|
     compute.vm.network :private_network, ip: "10.0.0.11"
     compute.vm.network :private_network, ip: "192.168.0.11"
     compute.vm.hostname = "compute"
@@ -36,6 +38,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         700]
       vbox.customize ["modifyvm", :id, "--cpus", 1]
   end
- end
-
+end
+end
 end
