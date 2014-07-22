@@ -16,12 +16,13 @@ sql connection mysql://keystone:KEYSTONE_DBPASS@controller/keystone
 # Use the openstack-db command to create the database and tables, as well
 # as a database user called keystone to connect to the database
 
-openstack-db --init --service keystone --password KEYSTONE_DBPASS
+openstack-db --init --service keystone --yes --password KEYSTONE_DBPASS --rootpw openstack
 
 # Define an authorization token to use as a shared secret between the Identity Service
 # and other OpenStack services
 
 ADMIN_TOKEN=897305213c5960a57c74
+echo $ADMIN_TOKEN
 
 openstack-config --set /etc/keystone/keystone.conf DEFAULT \
 admin_token $ADMIN_TOKEN
@@ -122,7 +123,7 @@ keystone service-create --name=keystone --type=identity \
 # you specify an endpoint, you provide URLs for the public API, internal API, and admin API
 
 keystone endpoint-create \
---service-id=0ef7d881ae48442ba5adec5da93d9d91 \
+--service-id=e0cca46e338445fb92704fc49983c5cc \
 --publicurl=http://controller:5000/v2.0 \
 --internalurl=http://controller:5000/v2.0 \
 --adminurl=http://controller:35357/v2.0

@@ -17,7 +17,7 @@ sudo cp $config_pre/hosts /etc/hosts
 
 # NTP
 
-yum install ntp
+yum install -y ntp vim
 service ntpd start
 chkconfig ntpd on
 
@@ -27,8 +27,9 @@ yum install -y mysql mysql-server MySQL-python
 
 cp /etc/my.cnf /etc/my.cnf.backup
 
+
 MYSQL_HOST="192.168.0.10"
-sudo sed -i "s/^bind\-address.*/bind-address = ${MYSQL_HOST}/g" /etc/my.cnf
+sudo sed -i "s/^bind\-address.*/bind-address = ${MYSQL_HOST}/g" /etc/my.cnf # Fixme!
 
 service mysqld start
 chkconfig mysqld on
@@ -53,9 +54,7 @@ yum install openstack-utils
 # SELinux during OpenStack installation. Install openstack-selinux
 yum install openstack-selinux
 
-yum upgrade
-
-reboot
+yum upgrade && reboot now
 
 # Messaging server
 
