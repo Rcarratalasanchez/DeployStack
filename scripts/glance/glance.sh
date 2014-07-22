@@ -6,6 +6,10 @@ yum install -y openstack-glance
 
 # NOTE: the openrc.sh must to be sourced
 
+# Backup of the glance.conf
+cp -p /etc/glance/glance-api.conf /etc/glance/glance-api.conf.backup
+cp -p /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.backup
+ 
 # The Image Service provides the glance-
 # api and glance-registry services, each with its own configuration file.
 
