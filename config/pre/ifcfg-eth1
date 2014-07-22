@@ -1,0 +1,8 @@
+# Internal Network
+DEVICE=eth1
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=192.168.0.10
+NETMASK=255.255.255.0
+DEFROUTE=yes
+ONBOOT=yes

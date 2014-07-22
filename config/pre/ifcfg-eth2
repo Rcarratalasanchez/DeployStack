@@ -1,0 +1,8 @@
+# External Network
+DEVICE=eth2
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=10.0.0.10
+NETMASK=255.255.255.0
+DEFROUTE=yes
+ONBOOT=yes
