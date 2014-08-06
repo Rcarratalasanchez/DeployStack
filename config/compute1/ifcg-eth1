@@ -1,0 +1,7 @@
+# Do not configure eth1 with a static IP address. The networking component of OpenStack assigns and configures an IP address.
+DEVICE="eth1"
+BOOTPROTO="dhcp"
+IPV6INIT="yes"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+TYPE="Ethernet"

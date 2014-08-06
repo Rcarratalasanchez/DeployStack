@@ -4,8 +4,8 @@
 
 config_pre = "../../config/pre"
 
-sudo cp $config_pre/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1
-sudo cp $config_pre/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-eth2
+sudo cp $config_pre/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-eth1
+sudo cp $config_pre/ifcfg-eth2 /etc/sysconfig/network-scripts/ifcfg-eth2
 
 service network restart
 

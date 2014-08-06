@@ -16,8 +16,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://vagrantcloud.com/nrel/CentOS-6.5-x86_64/version/4/provider/virtualbox.box"
 
   config.vm.define "compute" do |compute|
-    compute.vm.network :private_network, ip: "192.168.0.11", :device => "eth2"
     compute.vm.hostname = "compute"
+    compute.vm.network :private_network, ip: "10.0.0.11",
+      auto_config: false
+    compute.vm.network :private_network, ip: "192.168.0.11"
     # Otherwise using VirtualBox
     compute.vm.provider :virtualbox do |vbox|
       # Defaults
@@ -28,3 +30,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 end
 end
+
+
+
