@@ -106,7 +106,7 @@ openstack-config --set /etc/nova/nova.conf DEFAULT send_arp_for_ha True
 
 openstack-config --set /etc/nova/nova.conf DEFAULT share_dhcp_address True
 
-openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release
+openstack-config --set /etc/nova/nova.conf DEFAULT force_dhcp_release True
 
 openstack-config --set /etc/nova/nova.conf DEFAULT flat_interface eth1
 
@@ -118,22 +118,46 @@ openstack-config --set /etc/nova/nova.conf DEFAULT public_interface eth1
 # node. Perform this step only on compute nodes that do not run the nova-api service.
 
 yum install -y openstack-nova-api
-service openstack-nova-metadata-api start
+service openstack-nova-metadata-api restart
 chkconfig openstack-nova-metadata-api on
 
 # Start the network service and configure it to start when the system boots:
 
-service openstack-nova-network start
+service openstack-nova-network restart
 chkconfig openstack-nova-network on
 
 source openrc.sh
 
 # This command must to be particularized!
-# nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
-# --bridge=br100 --multi-host=T
+nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
+--bridge=br100 --multi-host=T
 
 # WARNING! The error WARNING nova.openstack.common.db.sqlalchemy.session 
 # [req-37781ed4-896d-450b-aa10-4330afe7e7d6 None None] SQL connection failed. infinite attempts left.
 # is related with iptables: sudo service iptables stop in both controllers will fixed this!
 
-sudo nova-manage network create vmnet --fixed_range_v4=10.0.0.0/24 --network_size=64 --bridge_interface=eth1
+# sudo nova-manage network create vmnet --fixed_range_v4=10.0.0.0/24 --network_size=64 --bridge_interface=eth1
+
+# Bug Fix: The manual of CentOS is NOT completed!
+
+# Edit the nova.conf file to define the networking mode:
+
+# Edit the /etc/nova/nova.conf file and add these lines to the [DEFAULT] section:
+
+# [DEFAULT]
+# ...
+ 
+# network_manager=nova.network.manager.FlatDHCPManager
+# firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+# network_size=254
+# allow_same_net_traffic=False
+# multi_host=True
+# send_arp_for_ha=True
+# share_dhcp_address=True
+# force_dhcp_release=True
+# flat_network_bridge=br100
+# flat_interface=eth1
+# public_interface=eth1
+
+nova network-create vmnet --fixed-range-v4=10.0.1.0/24 \
+--bridge=br100 --multi-host=T

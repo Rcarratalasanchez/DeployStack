@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     controller.vm.provider :virtualbox do |vbox|
       # Defaults
       vbox.customize ["modifyvm", :id, "--memory",
-        1024]
+        1500]
       vbox.customize ["modifyvm", :id, "--cpus", 1]
   end
 

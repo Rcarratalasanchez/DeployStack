@@ -1,22 +1,22 @@
 # This script checks the different services that are running in 
 
-function start_controller(){
+function restart_controller(){
 
-	service ntpd start
-	service mysqld start
-	service qpidd start
+	service ntpd restart
+	service mysqld restart
+	service qpidd restart
 
-	service openstack-keystone start
+	service openstack-keystone restart
 
-	service openstack-glance-api start
-	service openstack-glance-registry start
+	service openstack-glance-api restart
+	service openstack-glance-registry restart
 
-	service openstack-nova-api start
-	service openstack-nova-cert start
-	service openstack-nova-consoleauth start
-	service openstack-nova-scheduler start
-	service openstack-nova-conductor start
-	service openstack-nova-novncproxy start
+	service openstack-nova-api restart
+	service openstack-nova-cert restart
+	service openstack-nova-consoleauth restart
+	service openstack-nova-scheduler restart
+	service openstack-nova-conductor restart
+	service openstack-nova-novncproxy restart
 }
 
 function status_controller(){
