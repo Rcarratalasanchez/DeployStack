@@ -18,8 +18,7 @@ database connection mysql://nova:NOVA_DBPASS@controller/nova
 openstack-config --set /etc/nova/nova.conf \
 DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid
 
-openstack-config --set /etc/nova/nova.conf DEFAULT
-qpid_hostname controller
+openstack-config --set /etc/nova/nova.conf DEFAULT qpid_hostname controller
 
 # create the Compute service database and tables and a nova database user
 

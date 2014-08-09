@@ -54,7 +54,7 @@ keystone tenant-create --name=admin --description="Admin Tenant"
 # +-------------+----------------------------------+
 # | description |           Admin Tenant           |
 # |   enabled   |               True               |
-# |      id     | a749885059ab42e584866875f0bf46cd |
+# |      id     | b82272c59f6a4b109c62b0cb2344f377 |
 # |     name    |              admin               |
 # +-------------+----------------------------------+
 
@@ -65,7 +65,7 @@ keystone tenant-create --name=service --description="Service Tenant"
 # +-------------+----------------------------------+
 # | description |          Service Tenant          |
 # |   enabled   |               True               |
-# |      id     | 1611d07fe83b4eefb4ca5e3e277b4c4e |
+# |      id     | 26897dfe88874d6f97661af6753176dc |
 # |     name    |             service              |
 # +-------------+----------------------------------+
 
@@ -80,10 +80,9 @@ keystone user-create --name=admin --pass=ADMIN_PASS \
 # +----------+----------------------------------+
 # |  email   |        admin@example.com         |
 # | enabled  |               True               |
-# |    id    | 6ef07da984364b599a166eb7e1e0a7af |
+# |    id    | 125c892824d1480e80093f04f007ffea |
 # |   name   |              admin               |
 # +----------+----------------------------------+
-
 
 # Create a role for administrative tasks called admin. Any roles you create should map to
 # roles specified in the policy.json files of the various OpenStack services
@@ -93,7 +92,7 @@ keystone role-create --name=admin
 # +----------+----------------------------------+
 # | Property |              Value               |
 # +----------+----------------------------------+
-# |    id    | db023c2371ca4c1ba482b04c248acd72 |
+# |    id    | 0b08ea1611664ffc8c71d237c0105fd8 |
 # |   name   |              admin               |
 # +----------+----------------------------------+
 
@@ -114,7 +113,7 @@ keystone service-create --name=keystone --type=identity \
 # |   Property  |              Value               |
 # +-------------+----------------------------------+
 # | description |    Keystone Identity Service     |
-# |      id     | 0ef7d881ae48442ba5adec5da93d9d91 |
+# |      id     | 174e7377f6124869aa1fbcd452f3fa44 |
 # |     name    |             keystone             |
 # |     type    |             identity             |
 # +-------------+----------------------------------+
@@ -123,21 +122,21 @@ keystone service-create --name=keystone --type=identity \
 # you specify an endpoint, you provide URLs for the public API, internal API, and admin API
 
 keystone endpoint-create \
---service-id=e0cca46e338445fb92704fc49983c5cc \
+--service-id=174e7377f6124869aa1fbcd452f3fa44 \
 --publicurl=http://controller:5000/v2.0 \
 --internalurl=http://controller:5000/v2.0 \
 --adminurl=http://controller:35357/v2.0
 
-+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-|   adminurl  |   http://controller:35357/v2.0   |
-|      id     | c05ae2968d164314834ee14fff8284fc |
-| internalurl |   http://controller:5000/v2.0    |
-|  publicurl  |   http://controller:5000/v2.0    |
-|    region   |            regionOne             |
-|  service_id | 0ef7d881ae48442ba5adec5da93d9d91 |
-+-------------+----------------------------------+
+# +-------------+----------------------------------+
+# |   Property  |              Value               |
+# +-------------+----------------------------------+
+# |   adminurl  |   http://controller:35357/v2.0   |
+# |      id     | 1bcdebb2b8274a3c98995a028180e6b0 |
+# | internalurl |   http://controller:5000/v2.0    |
+# |  publicurl  |   http://controller:5000/v2.0    |
+# |    region   |            regionOne             |
+# |  service_id | 174e7377f6124869aa1fbcd452f3fa44 |
+# +-------------+----------------------------------+
 
 ## Verify the Identity Service installation
 
@@ -163,7 +162,7 @@ keystone user-list
 # +----------------------------------+-------+---------+-------------------+
 # |                id                |  name | enabled |       email       |
 # +----------------------------------+-------+---------+-------------------+
-# | 6ef07da984364b599a166eb7e1e0a7af | admin |   True  | admin@example.com |
+# | 125c892824d1480e80093f04f007ffea | admin |   True  | admin@example.com |
 # +----------------------------------+-------+---------+-------------------+
 
 # -> glance.sh

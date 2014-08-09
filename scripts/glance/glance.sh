@@ -27,14 +27,14 @@ openstack-db --init --service glance --yes --password GLANCE_DBPASS --rootpw ope
 # Create a glance user that the Image Service can use to authenticate with the Identity Service
 
 keystone user-create --name=glance --pass=GLANCE_PASS \
-> --email=glance@example.com
+ --email=glance@example.com
 
 # +----------+----------------------------------+
 # | Property |              Value               |
 # +----------+----------------------------------+
 # |  email   |        glance@example.com        |
 # | enabled  |               True               |
-# |    id    | 4f43cfe8d5024c17bc7fcbacadec6e3f |
+# |    id    | 64ef7c163f60481b967d545d6e915b72 |
 # |   name   |              glance              |
 # +----------+----------------------------------+
 
@@ -102,7 +102,7 @@ keystone service-create --name=glance --type=image \
 # |   Property  |              Value               |
 # +-------------+----------------------------------+
 # | description |       Glance Image Service       |
-# |      id     | b08373fcdcb545a5a7ba96a5cdbe9c52 |
+# |      id     | 090de864943e4a6cbfaeb1ccc22d603d |
 # |     name    |              glance              |
 # |     type    |              image               |
 # +-------------+----------------------------------+
@@ -110,7 +110,7 @@ keystone service-create --name=glance --type=image \
 # Use the id property returned for the service to create the endpoint
 
 keystone endpoint-create \
---service-id=b08373fcdcb545a5a7ba96a5cdbe9c52 \
+--service-id=090de864943e4a6cbfaeb1ccc22d603d \
 --publicurl=http://controller:9292 \
 --internalurl=http://controller:9292 \
 --adminurl=http://controller:9292
@@ -119,11 +119,11 @@ keystone endpoint-create \
 # |   Property  |              Value               |
 # +-------------+----------------------------------+
 # |   adminurl  |      http://controller:9292      |
-# |      id     | 82cede823c3b41abb85c040345d7adea |
+# |      id     | 878b23469ef849dbab0999335b0f8c6b |
 # | internalurl |      http://controller:9292      |
 # |  publicurl  |      http://controller:9292      |
 # |    region   |            regionOne             |
-# |  service_id | b08373fcdcb545a5a7ba96a5cdbe9c52 |
+# |  service_id | 090de864943e4a6cbfaeb1ccc22d603d |
 # +-------------+----------------------------------+
 
 # Start the glance-api and glance-registry services and configure them to start when the system boots
@@ -152,27 +152,29 @@ glance image-create --name="CirrOS 0.3.1" --disk-format=qcow2 \
 # +------------------+--------------------------------------+
 # | checksum         | d972013792949d0d3ba628fbe8685bce     |
 # | container_format | bare                                 |
-# | created_at       | 2014-07-22T22:39:55                  |
+# | created_at       | 2014-08-09T09:35:33                  |
 # | deleted          | False                                |
 # | deleted_at       | None                                 |
 # | disk_format      | qcow2                                |
-# | id               | f2e4d06b-0a0f-46b4-9204-374f7c7e8234 |
+# | id               | 1cc74b17-b37e-469f-bf14-f14def525d4f |
 # | is_public        | True                                 |
 # | min_disk         | 0                                    |
 # | min_ram          | 0                                    |
 # | name             | CirrOS 0.3.1                         |
-# | owner            | 75a2f462a05a4819898121ecc62195b7     |
+# | owner            | b82272c59f6a4b109c62b0cb2344f377     |
 # | protected        | False                                |
 # | size             | 13147648                             |
 # | status           | active                               |
-# | updated_at       | 2014-07-22T22:39:55                  |
+# | updated_at       | 2014-08-09T09:35:34                  |
 # +------------------+--------------------------------------+
 
+
 glance image-list
+
 # +--------------------------------------+--------------+-------------+------------------+----------+--------+
 # | ID                                   | Name         | Disk Format | Container Format | Size     | Status |
 # +--------------------------------------+--------------+-------------+------------------+----------+--------+
-# | f2e4d06b-0a0f-46b4-9204-374f7c7e8234 | CirrOS 0.3.1 | qcow2       | bare             | 13147648 | active |
+# | 1cc74b17-b37e-469f-bf14-f14def525d4f | CirrOS 0.3.1 | qcow2       | bare             | 13147648 | active |
 # +--------------------------------------+--------------+-------------+------------------+----------+--------+
 
 # -> nova.sh
