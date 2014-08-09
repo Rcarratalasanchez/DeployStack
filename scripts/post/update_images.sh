@@ -49,3 +49,26 @@ wget http://download.fedoraproject.org/pub/fedora/linux/releases/19/Images/x86_6
 
 glance image-create --name Fedora --is-public True --disk-format qcow2 --container-format bare \
  --file Fedora-x86_64-19-20130627-sda.qcow2 --progress
+
+#  +------------------+--------------------------------------+
+# | Property         | Value                                |
+# +------------------+--------------------------------------+
+# | checksum         | 9ff360edd3b3f1fc035205f63a58ec3e     |
+# | container_format | bare                                 |
+# | created_at       | 2014-08-09T14:36:35                  |
+# | deleted          | False                                |
+# | deleted_at       | None                                 |
+# | disk_format      | qcow2                                |
+# | id               | 6d74e518-2fa7-4663-a2a0-ae6c1fb38ce9 |
+# | is_public        | True                                 |
+# | min_disk         | 0                                    |
+# | min_ram          | 0                                    |
+# | name             | Fedora                               |
+# | owner            | b82272c59f6a4b109c62b0cb2344f377     |
+# | protected        | False                                |
+# | size             | 237371392                            |
+# | status           | active                               |
+# | updated_at       | 2014-08-09T14:36:36                  |
+# +------------------+--------------------------------------+
+
+

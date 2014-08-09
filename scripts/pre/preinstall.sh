@@ -15,6 +15,8 @@ hostname controller
 
 sudo cp $config_pre/hosts /etc/hosts
 
+vi /etc/sysconfig/network # For change hostname change permanent "HOSTNAME=controller/compute0x"
+
 # NTP
 
 yum install -y ntp vim

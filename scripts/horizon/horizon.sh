@@ -18,7 +18,7 @@ yum install -y memcached python-memcached mod_wsgi openstack-dashboard
 
 # Edit /etc/openstack-dashboard/local_settings:
 
-# ALLOWED_HOSTS = ['localhost', 'my-desktop']
+# ALLOWED_HOSTS = ['localhost', 'my-desktop', '192.168.0.10']
 
 # Edit /etc/openstack-dashboard/local_settings and change
 # OPENSTACK_HOST to the hostname of your Identity Service:
@@ -39,6 +39,8 @@ chkconfig memcached on
 # Options +Indexes
 # Order allow,deny
 # Allow from all
+
+# UPDATE!: there is a welcome.conf file that contains a Options -Indexes <--! Disabled this!
 
 # Error: SuspiciousOperation: Invalid HTTP_HOST header (you may need to set ALLOWED_HOSTS): 192.168.0.10
 
