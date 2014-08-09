@@ -16,8 +16,9 @@ nova keypair-list
 # +-------+-------------------------------------------------+
 # | Name  | Fingerprint                                     |
 # +-------+-------------------------------------------------+
-# | mykey | 57:06:9c:82:c3:8c:4d:0b:5c:3e:1f:15:dd:3f:55:56 |
+# | mykey | db:5c:fe:05:e2:70:0a:85:22:36:17:2d:20:f4:8e:95 |
 # +-------+-------------------------------------------------+
+
 
 # To launch an instance, you must specify the ID for the flavor you want to use for the
 # instance. A flavor is a resource allocation profile
@@ -39,7 +40,7 @@ nova image-list
 # +--------------------------------------+--------------+--------+--------+
 # | ID                                   | Name         | Status | Server |
 # +--------------------------------------+--------------+--------+--------+
-# | f2e4d06b-0a0f-46b4-9204-374f7c7e8234 | CirrOS 0.3.1 | ACTIVE |        |
+# | 1cc74b17-b37e-469f-bf14-f14def525d4f | CirrOS 0.3.1 | ACTIVE |        |
 # +--------------------------------------+--------------+--------+--------+
 
 # To use SSH and ping, you must configure security group rules
@@ -63,7 +64,7 @@ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 # nova boot --flavor flavorType --key_name keypairName --
 # image ID newInstanceName
 
-nova boot --flavor 1 --key_name mykey --image f2e4d06b-0a0f-46b4-9204-374f7c7e8234 --security_group default cirrOS
+nova boot --flavor 1 --key_name mykey --image 1cc74b17-b37e-469f-bf14-f14def525d4f --security_group default cirrOS
 # +--------------------------------------+-----------------------------------------------------+
 # | Property                             | Value                                               |
 # +--------------------------------------+-----------------------------------------------------+
@@ -108,7 +109,7 @@ nova list
 
 # THSOOT if the Status of the VM is ERROR: 
 
-# Don't get the vmnet correct!!
+### Don't get the vmnet correct!!
 
 # In controller
 
@@ -130,7 +131,7 @@ service openstack-nova-compute restart
 
 tail -f /var/log/nova/network.log
 
-# libvirtError: internal error no supported architecture for os type 'hvm'\n"]
+### libvirtError: internal error no supported architecture for os type 'hvm'\n"]
 
 # Check the VT-x in the computer
 sudo apt-get install cpu-checker
@@ -144,3 +145,22 @@ sudo kvm-ok
 # Currently the compute host is trying to use KVM but the virtualization extensions KVM 
 # requires are not available, because you are running in a virtual machine and nested virtualization 
 # is not enabled/available.
+
+### Error:  WARNING nova.scheduler.driver -> REBOOT the compute!!!!!
+
+### Error!: Glance connect to the 192.168.0.11 (compute) and not to controller:9292 (glance is there):
+
+# # default glance hostname or ip (string value)
+# glance_host=controller
+
+# # default glance port (integer value)
+# glance_port=9292
+
+# # Default protocol to use when connecting to glance. Set to
+# # https for SSL. (string value)
+# #glance_protocol=http
+
+# # A list of the glance api servers available to nova. Prefix
+# # with https:// for ssl-based glance api servers.
+# # ([hostname|ip]:port) (list value)
+# glance_api_servers=controller:9292

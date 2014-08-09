@@ -35,6 +35,10 @@ yum install -y openstack-utils
 
 yum install -y openstack-nova-compute
 
+cp -p /etc/nova/nova.conf /etc/nova/nova.conf.backup
+
+# Configure nova.conf
+
 openstack-config --set /etc/nova/nova.conf database connection mysql://nova:NOVA_DBPASS@controller/nova
 
 openstack-config --set /etc/nova/nova.conf DEFAULT auth_strategy keystone
@@ -161,3 +165,5 @@ nova network-create vmnet --fixed-range-v4=10.0.0.0/24 \
 
 nova network-create vmnet --fixed-range-v4=10.0.1.0/24 \
 --bridge=br100 --multi-host=T
+
+# -> post (launch_instance.sh)

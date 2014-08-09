@@ -41,7 +41,7 @@ keystone user-create --name=nova --pass=NOVA_PASS --email=nova@example.com
 # +----------+----------------------------------+
 # |  email   |         nova@example.com         |
 # | enabled  |               True               |
-# |    id    | fecef2e573e34587a08e6bbe768ff442 |
+# |    id    | dfb5b436721149f4bf1fb6c452eed425 |
 # |   name   |               nova               |
 # +----------+----------------------------------+
 
@@ -88,7 +88,7 @@ keystone service-create --name=nova --type=compute \
 # |   Property  |              Value               |
 # +-------------+----------------------------------+
 # | description |       Nova Compute service       |
-# |      id     | e6d913b5b6354d24967c3b20a6418983 |
+# |      id     | f81e7a6b5f374085983f948ccb5a8a2e |
 # |     name    |               nova               |
 # |     type    |             compute              |
 # +-------------+----------------------------------+
@@ -96,7 +96,7 @@ keystone service-create --name=nova --type=compute \
 # Use the id property that is returned to create the endpoint
 
 keystone endpoint-create \
---service-id=e6d913b5b6354d24967c3b20a6418983 \
+--service-id=f81e7a6b5f374085983f948ccb5a8a2e \
 --publicurl=http://controller:8774/v2/%\(tenant_id\)s \
 --internalurl=http://controller:8774/v2/%\(tenant_id\)s \
 --adminurl=http://controller:8774/v2/%\(tenant_id\)s
@@ -105,11 +105,11 @@ keystone endpoint-create \
 # |   Property  |                  Value                  |
 # +-------------+-----------------------------------------+
 # |   adminurl  | http://controller:8774/v2/%(tenant_id)s |
-# |      id     |     9941b27ed586414ea7726a8cb8d75fa6    |
+# |      id     |     9b94d1d0f3eb407aa2dc39b01c694467    |
 # | internalurl | http://controller:8774/v2/%(tenant_id)s |
 # |  publicurl  | http://controller:8774/v2/%(tenant_id)s |
 # |    region   |                regionOne                |
-# |  service_id |     e6d913b5b6354d24967c3b20a6418983    |
+# |  service_id |     f81e7a6b5f374085983f948ccb5a8a2e    |
 # +-------------+-----------------------------------------+
 
 # Start Compute services and configure them to start when the system boots:
@@ -133,7 +133,7 @@ nova image-list
 # +--------------------------------------+--------------+--------+--------+
 # | ID                                   | Name         | Status | Server |
 # +--------------------------------------+--------------+--------+--------+
-# | f2e4d06b-0a0f-46b4-9204-374f7c7e8234 | CirrOS 0.3.1 | ACTIVE |        |
+# | 1cc74b17-b37e-469f-bf14-f14def525d4f | CirrOS 0.3.1 | ACTIVE |        |
 # +--------------------------------------+--------------+--------+--------+
 
 # -> compute1
