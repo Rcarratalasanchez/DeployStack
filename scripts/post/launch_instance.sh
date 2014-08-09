@@ -107,6 +107,8 @@ nova list
 # | 3214069d-a1c5-4cb4-a1e1-9453364f8612 | cirrOS | BUILD  | spawning   | NOSTATE     |          |
 # +--------------------------------------+--------+--------+------------+-------------+----------+
 
+# -> Horizon.sh
+
 # THSOOT if the Status of the VM is ERROR: 
 
 ### Don't get the vmnet correct!!
@@ -164,3 +166,4 @@ sudo kvm-ok
 # # with https:// for ssl-based glance api servers.
 # # ([hostname|ip]:port) (list value)
 # glance_api_servers=controller:9292
+
