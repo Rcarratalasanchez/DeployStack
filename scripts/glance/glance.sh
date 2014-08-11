@@ -177,4 +177,6 @@ glance image-list
 # | 1cc74b17-b37e-469f-bf14-f14def525d4f | CirrOS 0.3.1 | qcow2       | bare             | 13147648 | active |
 # +--------------------------------------+--------------+-------------+------------------+----------+--------+
 
+# Note: the images are stored in /var/lib/glance/images/ by default
+
 # -> nova.sh

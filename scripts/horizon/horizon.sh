@@ -48,3 +48,8 @@ chkconfig memcached on
 
 # ALLOWED_HOSTS = ['localhost', 'my-desktop', '192.168.0.10']
 
+
+# To connect to Horizon
+
+# http://lifehacker.com/237227/geek-to-live--encrypt-your-web-browsing-session-with-an-ssh-socks-proxy
+
