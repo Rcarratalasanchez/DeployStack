@@ -42,6 +42,8 @@ echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-t
 export OS_SERVICE_TOKEN=ADMIN
 export OS_SERVICE_ENDPOINT=http://controller:35357/v2.0
 
+# [ADMIN]
+
 # Create admin tenant
 keystone tenant-create --name admin --description "Admin Tenant"
 # +-------------+----------------------------------+
@@ -74,6 +76,11 @@ keystone role-create --name admin
 # |   name   |              admin               |
 # +----------+----------------------------------+
 
+# Add the admin role to the admin tenant and user
+keystone user-role-add --user admin --tenant admin --role admin
+
+# [DEMO]
+
 # Create demo tenant
 keystone tenant-create --name demo --description "Demo Tenant"
 # +-------------+----------------------------------+
@@ -100,6 +107,8 @@ keystone user-create --name demo --tenant demo --pass DEMO_PASS --email EMAIL_AD
 
 # [INFO]Using the --tenant option automatically assigns the _member_ role
 # to a user. This option will also create the _member_ role if it does not exist
+
+# [ROBER]
 
 # Create rober tenant
 keystone tenant-create --name rober --description "Rober Tenant"
@@ -175,4 +184,77 @@ keystone endpoint-create \
 # works that service different types of users for security reasons. Also, OpenStack sup-
 # ports multiple regions for scalability. For simplicity, this configuration uses the manage-
 # ment network for all endpoint variations and the regionOne region.
+
+unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT
+
+keystone --os-tenant-name admin --os-username admin --os-password ADMIN_PASS \
+--os-auth-url http://controller:35357/v2.0 token-get
+# +-----------+----------------------------------+
+# |  Property |              Value               |
+# +-----------+----------------------------------+
+# |  expires  |       2015-02-08T05:27:04Z       |
+# |     id    | b25eba9d23e74c0399886fa28fa662c5 |
+# | tenant_id | 106f9551e8214b4e97d9c7a1fe935a81 |
+# |  user_id  | 99ce47fd50be49cda908059b33f671b3 |
+# +-----------+----------------------------------+
+
+keystone --os-tenant-name admin --os-username admin --os-password ADMIN_PASS \
+--os-auth-url http://controller:35357/v2.0 tenant-list
+# +----------------------------------+---------+---------+
+# |                id                |   name  | enabled |
+# +----------------------------------+---------+---------+
+# | 106f9551e8214b4e97d9c7a1fe935a81 |  admin  |   True  |
+# | e639ec0f60084f36910a76cfcfe42e77 |   demo  |   True  |
+# | bde34c68c83a4bcbbf89d16c4876ef2d |  rober  |   True  |
+# | 3427d7d1a0f647b3bcdf65807ca1a898 | service |   True  |
+# +----------------------------------+---------+---------+
+
+keystone --os-tenant-name admin --os-username admin --os-password ADMIN_PASS \
+--os-auth-url http://controller:35357/v2.0 user-list
+# +----------------------------------+-------+---------+---------------+
+# |                id                |  name | enabled |     email     |
+# +----------------------------------+-------+---------+---------------+
+# | 99ce47fd50be49cda908059b33f671b3 | admin |   True  | EMAIL_ADDRESS |
+# | 95a57b849d32434ea8bf2ad4dc93de7e |  demo |   True  |  EMAIL_ADDRES |
+# | 6036a39864b048aaa11fa102821f670b | rober |   True  | EMAIL_ADDRESS |
+# +----------------------------------+-------+---------+---------------+
+
+keystone --os-tenant-name admin --os-username admin --os-password ADMIN_PASS \
+--os-auth-url http://controller:35357/v2.0 role-list
+# +----------------------------------+----------+
+# |                id                |   name   |
+# +----------------------------------+----------+
+# | 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
+# | a384bf51990147c4bcb75e46af7d1d65 |  admin   |
+# +----------------------------------+----------+
+
+keystone --os-tenant-name demo --os-username demo --os-password DEMO_PASS \
+--os-auth-url http://controller:35357/v2.0 token-get
+# +-----------+----------------------------------+
+# |  Property |              Value               |
+# +-----------+----------------------------------+
+# |  expires  |       2015-02-08T05:29:52Z       |
+# |     id    | 0f43ec255bce4d13b38982724a67d57f |
+# | tenant_id | e639ec0f60084f36910a76cfcfe42e77 |
+# |  user_id  | 95a57b849d32434ea8bf2ad4dc93de7e |
+# +-----------+----------------------------------+
+
+keystone --os-tenant-name rober --os-username rober --os-password ROBER_PASS \
+--os-auth-url http://controller:35357/v2.0 token-get
+# +-----------+----------------------------------+
+# |  Property |              Value               |
+# +-----------+----------------------------------+
+# |  expires  |       2015-02-08T05:30:23Z       |
+# |     id    | 2111a2bdac09495f8f563437bd01045e |
+# | tenant_id | bde34c68c83a4bcbbf89d16c4876ef2d |
+# |  user_id  | 6036a39864b048aaa11fa102821f670b |
+# +-----------+----------------------------------+
+
+keystone --os-tenant-name demo --os-username demo --os-password DEMO_PASS \
+--os-auth-url http://controller:35357/v2.0 user-list
+# You are not authorized to perform the requested action: admin_required (HTTP 403)
+
+# [INFO]
+# Port 35357 is used for administrative functions only. 
+# Port 5000 is for normal user functions and is the most commonly used.
 
