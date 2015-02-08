@@ -11,33 +11,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box = "chef/centos-6.5"
+  config.vm.box = "centos7"
 
-  config.vm.box_url = "https://vagrantcloud.com/nrel/CentOS-6.5-x86_64/version/4/provider/virtualbox.box"
+  config.vm.box_url = "https://f0fff3908f081cb6461b407be80daf97f07ac418.googledrive.com/host/0BwtuV7VyVTSkUG1PM3pCeDJ4dVE/centos7.box"
 
   config.vm.define "controller" do |controller|
-    controller.vm.network :private_network, ip: "10.0.0.10"
-    controller.vm.network :private_network, ip: "192.168.0.10"
+    controller.vm.network :private_network, ip: "10.0.0.11"
     controller.vm.hostname = "controller"
     # Otherwise using VirtualBox
     controller.vm.provider :virtualbox do |vbox|
       # Defaults
       vbox.customize ["modifyvm", :id, "--memory",
-        1024]
+        1500]
       vbox.customize ["modifyvm", :id, "--cpus", 1]
   end
 
-  config.vm.define "compute" do |compute|
-    compute.vm.network :private_network, ip: "10.0.0.11"
-    compute.vm.network :private_network, ip: "192.168.0.11"
-    compute.vm.hostname = "compute"
-    # Otherwise using VirtualBox
-    compute.vm.provider :virtualbox do |vbox|
-      # Defaults
-      vbox.customize ["modifyvm", :id, "--memory",
-        700]
-      vbox.customize ["modifyvm", :id, "--cpus", 1]
-  end
-end
 end
 end
