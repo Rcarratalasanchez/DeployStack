@@ -56,3 +56,8 @@ mysql_secure_installation
 ## Messaging Server
 apt-get install -y rabbitmq-server
 
+
+# rabbitmqctl change_password guest RABBIT_PASS
+#You must configure the rabbit_password key in the configuration file for each
+#OpenStack service that uses the message broker.
+
