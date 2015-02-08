@@ -258,3 +258,4 @@ keystone --os-tenant-name demo --os-username demo --os-password DEMO_PASS \
 # Port 35357 is used for administrative functions only. 
 # Port 5000 is for normal user functions and is the most commonly used.
 
+# -> controller/glance.sh

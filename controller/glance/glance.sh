@@ -182,3 +182,29 @@ glance image-list
 
 rm -rf /tmp/images/
 
+wget http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+
+glance image-create --name "trusty-image" --file trusty-server-cloudimg-amd64-disk1.img --disk-format qcow2 --container-format bare --is-public True --progress
+# +------------------+--------------------------------------+
+# | Property         | Value                                |
+# +------------------+--------------------------------------+
+# | checksum         | e5adaad20fdf3361ed86a16cecbf5b77     |
+# | container_format | bare                                 |
+# | created_at       | 2015-02-08T16:58:36                  |
+# | deleted          | False                                |
+# | deleted_at       | None                                 |
+# | disk_format      | qcow2                                |
+# | id               | 984cb562-e1c0-4cff-9fee-16cedc9ff249 |
+# | is_public        | True                                 |
+# | min_disk         | 0                                    |
+# | min_ram          | 0                                    |
+# | name             | trusty-image                         |
+# | owner            | None                                 |
+# | protected        | False                                |
+# | size             | 256508416                            |
+# | status           | active                               |
+# | updated_at       | 2015-02-08T16:58:38                  |
+# | virtual_size     | None                                 |
+# +------------------+--------------------------------------+
+
+# -> controller/nova.sh
