@@ -6,6 +6,9 @@
 sudo apt-get -y install glance
 sudo apt-get -y install python-glanceclient 
 
+sudo cp -p /etc/glance/glance-api.conf /etc/glance/glance-api.conf.backup
+sudo cp -p /etc/glance/glance-registry.conf /etc/glance/glance-registry.conf.backup
+
 # Config Files
 GLANCE_API_CONF=/etc/glance/glance-api.conf
 GLANCE_REGISTRY_CONF=/etc/glance/glance-registry.conf
@@ -20,6 +23,7 @@ MYSQL_GLANCE_PASS=GLANCE_DBPASS
 mysql -uroot -p$MYSQL_ROOT_PASS -e 'CREATE DATABASE glance;'
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '$MYSQL_GLANCE_PASS';"
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '$MYSQL_GLANCE_PASS';"
+mysql -uroot -p$MYSQL_ROOT_PASS -e "SHOW GRANTS FOR glance"
 
 source admin-openrc.sh
 
@@ -138,8 +142,16 @@ sudo cp glance-registry.conf /etc/glance/glance-registry.conf
 # ...
 # verbose = True
 
+# Populate the Image Service database:
+su -s /bin/sh -c "glance-manage db_sync" glance
+
+
+# Restart and delete sqlite databases
+
 service glance-registry restart
 service glance-api restart
+
+rm -f /var/lib/glance/glance.sqlite
 
 # Check operation
 

@@ -69,6 +69,7 @@ keystone endpoint-create \
 # |  service_id |     c7fdca8fe1af46b5877f715284d73e32    |
 # +-------------+-----------------------------------------+
 
+# Install the packages
 apt-get install -y nova-api nova-cert nova-conductor nova-consoleauth \
 nova-novncproxy nova-scheduler python-novaclient
 
