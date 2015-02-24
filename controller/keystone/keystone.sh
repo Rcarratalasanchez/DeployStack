@@ -14,18 +14,23 @@ MYSQL_KEYSTONE_PASS=openstack
 mysql -uroot -p$MYSQL_ROOT_PASS -e 'CREATE DATABASE keystone;'
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '$MYSQL_KEYSTONE_PASS';"
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '$MYSQL_KEYSTONE_PASS';"
+mysql -uroot -p$MYSQL_ROOT_PASS -e "SHOW GRANTS FOR keystone"
 
 # Install components
 apt-get install -y keystone python-keystoneclient
 
 cp -p /etc/keystone/keystone.conf /etc/keystone/keystone.conf.backup
 
-sudo sed -i "s#^connection.*#connection = mysql://keystone:${MYSQL_KEYSTONE_PASS}@${MYSQL_HOST}/keystone#" ${KEYSTONE_CONF}
-sudo sed -i 's/^#admin_token.*/admin_token = ADMIN/' ${KEYSTONE_CONF}
-sudo sed -i 's,^#log_dir.*,log_dir = /var/log/keystone,' ${KEYSTONE_CONF}
-sudo sed -i 's/^#verbose.*/verbose=true/' ${KEYSTONE_CONF}
-sudo sed -i 's/^#provider.*/provider = keystone.token.providers.uuid.Provider/' ${KEYSTONE_CONF}
-sudo sed -i 's/^#driver=keystone.token.*/driver=keystone.token.persistence.backends.sql.Token/' ${KEYSTONE_CONF}
+# Modify the config file
+
+# sudo sed -i "s#^connection.*#connection = mysql://keystone:${MYSQL_KEYSTONE_PASS}@${MYSQL_HOST}/keystone#" ${KEYSTONE_CONF}
+# sudo sed -i 's/^#admin_token.*/admin_token = ADMIN/' ${KEYSTONE_CONF}
+# sudo sed -i 's,^#log_dir.*,log_dir = /var/log/keystone,' ${KEYSTONE_CONF}
+# sudo sed -i 's/^#verbose.*/verbose=true/' ${KEYSTONE_CONF}
+# sudo sed -i 's/^#provider.*/provider = keystone.token.providers.uuid.Provider/' ${KEYSTONE_CONF}
+# sudo sed -i 's/^#driver=keystone.token.*/driver=keystone.token.persistence.backends.sql.Token/' ${KEYSTONE_CONF}
+
+sudo cp -p keystone.conf /etc/keystone/keystone.conf
 
 # Populate the Keystone DB
 su -s /bin/sh -c "keystone-manage db_sync" keystone

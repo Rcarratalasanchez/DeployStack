@@ -3,7 +3,6 @@
 ######################
 
 # Install Service
-sudo apt-get update
 sudo apt-get -y install glance
 sudo apt-get -y install python-glanceclient 
 

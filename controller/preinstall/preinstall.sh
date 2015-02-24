@@ -25,6 +25,8 @@ apt-get update && apt-get -y dist-upgrade
 ## Database
 apt-get -y install mariadb-server python-mysqldb
 
+cp -p /etc/mysql/my.cnf /etc/mysql/my.cnf.backup
+
 # WARNING: Mariadb ask for the password in interactive mode -> Use:
 #[ALTERNATIVE]
 # export MYSQL_ROOT_PASS=openstack
@@ -63,4 +65,4 @@ rabbitmqctl change_password guest RABBIT_PASS
 #You must configure the rabbit_password key in the configuration file for each
 #OpenStack service that uses the message broker.
 
-# -> controller/preinstall.sh
+# -> controller/keystone/keystone.sh
