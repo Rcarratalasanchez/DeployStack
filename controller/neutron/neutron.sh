@@ -2,13 +2,13 @@
 # Chapter 7 NEUTRON_CONTROLLER  #
 #################################
 
-# Config Files & Vars
+## Config Files & Vars
 NEUTRON_CONF=/etc/neutron/neutron.conf
 MYSQL_HOST=controller
 MYSQL_ROOT_PASS=openstack
 MYSQL_NEUTRON_PASS=NEUTRON_DBPASS
 
-# To create the database
+## To create the database
 mysql -uroot -p$MYSQL_ROOT_PASS -e 'CREATE DATABASE neutron;'
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY '$MYSQL_NEUTRON_PASS';"
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY '$MYSQL_NEUTRON_PASS';"
@@ -16,7 +16,7 @@ mysql -uroot -p$MYSQL_ROOT_PASS -e "SHOW GRANTS FOR neutron"
 
 source admin-openrc.sh
 
-# Create the neutron user:
+## Create the neutron user:
 keystone user-create --name neutron --pass NEUTRON_PASS
 # +----------+----------------------------------+
 # | Property |              Value               |
@@ -28,10 +28,10 @@ keystone user-create --name neutron --pass NEUTRON_PASS
 # | username |             neutron              |
 # +----------+----------------------------------+
 
-# Add the admin role to the neutron user:
+## Add the admin role to the neutron user:
 keystone user-role-add --user neutron --tenant service --role admin
 
-# Create the neutron service entity
+## Create the neutron service entity
 keystone service-create --name neutron --type network \
 --description "OpenStack Networking"
 # +-------------+----------------------------------+
@@ -44,7 +44,7 @@ keystone service-create --name neutron --type network \
 # |     type    |             network              |
 # +-------------+----------------------------------+
 
-# Create the Networking service API endpoints:
+## Create the Networking service API endpoints:
 keystone endpoint-create \
 --service-id $(keystone service-list | awk '/ network / {print $2}') \
 --publicurl http://controller:9696 \
@@ -62,7 +62,7 @@ keystone endpoint-create \
 # |  service_id | cb312f60266344e6bc3ce132e6337331 |
 # +-------------+----------------------------------+
 
-# Install networking components
+## Install networking components
 apt-get -y install neutron-server neutron-plugin-ml2 python-neutronclient
 
 cp -p /etc/neutron/neutron.conf /etc/neutron/neutron.conf.backup
@@ -126,4 +126,90 @@ sudo sed -i "s/^# nova_admin_tenant_id =.*/nova_admin_tenant_id = ${SERVICE_ADMI
 # verbose = True
 
 ### IMPORTANT!!! Replace SERVICE_TENANT_ID with the service tenant identifier (id)
+
+## To configure the Modular Layer 2 (ML2) plug-in
+cp -p /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.backup
+
+cp -p ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini
+
+# In the [ml2] section, enable the flat and generic routing encapsulation (GRE) net-
+# work type drivers, GRE tenant networks, and the OVS mechanism driver:
+# [ml2]
+# ...
+# type_drivers = flat,gre
+# tenant_network_types = gre
+# mechanism_drivers = openvswitch
+
+# In the [ml2_type_gre] section, configure the tunnel identifier (id) range:
+# [ml2_type_gre]
+# ...
+# tunnel_id_ranges = 1:1000
+
+# In the [securitygroup] section, enable security groups, enable ipset, and con-
+# figure the OVS iptables firewall driver:
+# [securitygroup]
+# ...
+# enable_security_group = True
+# enable_ipset = True
+# firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+
+## To configure Compute to use Networking
+cp -p ../nova/nova.conf /etc/nova/nova.conf
+
+# [DEFAULT]
+# ...
+# network_api_class = nova.network.neutronv2.api.API
+# security_group_api = neutron
+# linuxnet_interface_driver = nova.network.linux_net.
+# LinuxOVSInterfaceDriver
+# firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+# [neutron]
+# ...
+# url = http://controller:9696
+# auth_strategy = keystone
+# admin_auth_url = http://controller:35357/v2.0
+# admin_tenant_name = service
+# admin_username = neutron
+# admin_password = NEUTRON_PASS
+
+## Populate the database:
+su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+--config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade juno" neutron
+
+## Restart the Compute services:
+
+service nova-api restart
+service nova-scheduler restart
+service nova-conductor restart
+
+## Restart the Networking service:
+service neutron-server restart
+
+## Verify operation:
+source admin-openrc
+
+neutron ext-list
+# +-----------------------+-----------------------------------------------+
+# | alias                 | name                                          |
+# +-----------------------+-----------------------------------------------+
+# | security-group        | security-group                                |
+# | l3_agent_scheduler    | L3 Agent Scheduler                            |
+# | ext-gw-mode           | Neutron L3 Configurable external gateway mode |
+# | binding               | Port Binding                                  |
+# | provider              | Provider Network                              |
+# | agent                 | agent                                         |
+# | quotas                | Quota management support                      |
+# | dhcp_agent_scheduler  | DHCP Agent Scheduler                          |
+# | l3-ha                 | HA Router extension                           |
+# | multi-provider        | Multi Provider Network                        |
+# | external-net          | Neutron external network                      |
+# | router                | Neutron L3 Router                             |
+# | allowed-address-pairs | Allowed Address Pairs                         |
+# | extraroute            | Neutron Extra Route                           |
+# | extra_dhcp_opt        | Neutron Extra DHCP opts                       |
+# | dvr                   | Distributed Virtual Router                    |
+# +-----------------------+-----------------------------------------------+
+
+
 
