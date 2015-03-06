@@ -2,6 +2,7 @@
 
 function restart_controller(){
 
+	service mysql restart
 	service ntp restart
 	service rabbitmq-server
 

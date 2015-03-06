@@ -211,5 +211,28 @@ neutron ext-list
 # | dvr                   | Distributed Virtual Router                    |
 # +-----------------------+-----------------------------------------------+
 
+#################################
+# Chapter 9 METADATA_NEUTRON    #
+#################################
+
+# On the controller node, edit the /etc/nova/nova.conf file and complete the fol-
+# lowing action:
+
+# In the [neutron] section, enable the metadata proxy and configure the secret:
+# [neutron]
+# ...
+# service_metadata_proxy = True
+# metadata_proxy_shared_secret = METADATA_SECRET
+# Replace METADATA_SECRET with the secret you chose for the metadata proxy.
+
+# On the controller node, restart the Compute API service:
+service nova-api restart
+
+####################################
+# Chapter 11 VERIFICATION NEUTRON  #
+####################################
+
+source admin-openrc.sh
+
 
 

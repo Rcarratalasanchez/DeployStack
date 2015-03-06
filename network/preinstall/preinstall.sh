@@ -19,7 +19,6 @@ apt-get install -y ntp
 service ntp restart
 ntpq -c peers
 
-
 # #### IMPORTANT!!
 # The external interface uses a special configuration without an IP address assigned to it.
 # Configure the third interface as the external interface:

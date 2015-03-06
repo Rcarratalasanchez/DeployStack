@@ -18,3 +18,4 @@ apt-get update && apt-get -y dist-upgrade
 apt-get install -y ntp
 service ntp restart
 ntpq -c peers
+

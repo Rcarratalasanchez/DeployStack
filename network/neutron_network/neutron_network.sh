@@ -125,3 +125,115 @@ cp -p l3_agent.ini /etc/neutron/l3_agent.ini
 # ...
 # verbose = True
 
+## To configure the DHCP agent
+
+cp -p /etc/neutron/dhcp_agent.ini /etc/neutron/dhcp_agent.ini.backup
+
+cp -p dhcp_agent.ini /etc/neutron/dhcp_agent.ini
+
+# In the [DEFAULT] section, configure the drivers, enable namespaces and enable
+# deletion of defunct DHCP namespaces:
+# [DEFAULT]
+# ...
+# interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+# dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+# use_namespaces = True
+# dhcp_delete_namespaces = True
+
+# [DEFAULT]
+# ...
+# verbose = True
+
+# Edit the /etc/neutron/dhcp_agent.ini file and complete the following ac-
+# tion:
+# •
+# In the [DEFAULT] section, enable the dnsmasq configuration file:
+# [DEFAULT]
+# ...
+# dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.con
+
+cp dnsmasq-neutron.conf /etc/neutron
+
+# Create and edit the /etc/neutron/dnsmasq-neutron.conf file and com-
+# plete the following action:
+
+# Enable the DHCP MTU option (26) and configure it to 1454 bytes:
+# dhcp-option-force=26,1454
+
+# Kill any existing dnsmasq processes:
+
+pkill dnsmasq
+
+## To configure the metadata agent
+# The metadata agent provides configuration information such as credentials to instances.
+
+cp -p /etc/neutron/metadata_agent.ini /etc/neutron/metadata_agent.ini.backup
+
+cp -p metadata_agent.ini /etc/neutron/metadata_agent.ini
+
+# [DEFAULT]
+# ...
+# auth_url = http://controller:5000/v2.0
+# auth_region = regionOne
+# admin_tenant_name = service
+# admin_user = neutron
+# admin_password = NEUTRON_PASS
+
+# In the [DEFAULT] section, configure the metadata host:
+# [DEFAULT]
+# ...
+# nova_metadata_ip = controller
+
+# In the [DEFAULT] section, configure the metadata proxy shared secret:
+# [DEFAULT]
+# ...
+# metadata_proxy_shared_secret = METADATA_SECRET
+
+# (Optional) To assist with troubleshooting, enable verbose logging in the [DE-
+# FAULT] section:
+# [DEFAULT]
+# ...
+# verbose = True
+
+# --> Go to Controller/Neutron/neutron.sh
+
+##################################
+# Chapter 10 OPENVSWITCH_NETWORK #
+##################################
+
+# To configure the Open vSwitch (OVS) service
+
+# Restart the OVS service:
+service openvswitch-switch restart
+
+# Add the external bridge:
+ovs-vsctl add-br br-ex
+
+# Add a port to the external bridge that connects to the physical external network interface:
+# Replace INTERFACE_NAME with the actual interface name. For example, eth2 or ens256.
+ovs-vsctl add-port br-ex eth3
+
+# Restart the Networking services:
+
+service neutron-plugin-openvswitch-agent restart
+service neutron-l3-agent restart
+service neutron-dhcp-agent restart
+service neutron-metadata-agent restart
+
+# -> Go to controller node/neutron.sh
+
+## TSHOOT
+
+# The neutron services in the network node can't connect to controller node:
+
+# 2015-03-06 20:44:51.502 11697 TRACE neutron ImportError: No module named rabbit
+# 2015-03-06 20:44:51.502 11697 TRACE neutron 
+
+# An error occurs when set the rpc_backend to rabbit instead of leave it 
+# by default, because by default is set to kombu
+
+# Unset the rpc_backend variable and restart the services then check in the 
+# controller node with neutron agent-list
+
+# The messaging module to use, defaults to kombu.
+#rpc_backend = rabbit
