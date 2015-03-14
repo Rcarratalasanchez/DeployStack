@@ -125,7 +125,8 @@ sudo sed -i "s/^# nova_admin_tenant_id =.*/nova_admin_tenant_id = ${SERVICE_ADMI
 # ...
 # verbose = True
 
-### IMPORTANT!!! Replace SERVICE_TENANT_ID with the service tenant identifier (id)
+### IMPORTANT!!! Repl	service ntp restart
+	service nova-compute restartace SERVICE_TENANT_ID with the service tenant identifier (id)
 
 ## To configure the Modular Layer 2 (ML2) plug-in
 cp -p /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.backup
@@ -234,5 +235,7 @@ service nova-api restart
 
 source admin-openrc.sh
 
+# List agents to verify successful launch of the neutron agents:
+neutron-agent list
 
 
