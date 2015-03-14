@@ -150,7 +150,7 @@ cp -p dhcp_agent.ini /etc/neutron/dhcp_agent.ini
 # In the [DEFAULT] section, enable the dnsmasq configuration file:
 # [DEFAULT]
 # ...
-# dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.con
+# dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
 
 cp dnsmasq-neutron.conf /etc/neutron
 

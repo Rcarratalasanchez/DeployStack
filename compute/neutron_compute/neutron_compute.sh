@@ -141,4 +141,4 @@ service nova-compute restart
 # Restart the Open vSwitch (OVS) agent:
 service neutron-plugin-openvswitch-agent restart
 
-
+# -> Go to Chapter 12 controller/neutron/create_initial_network.sh
