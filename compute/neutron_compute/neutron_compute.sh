@@ -98,3 +98,47 @@ cp -p /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.in
 # Replace INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS with the IP address of
 # the instance tunnels network interface on your compute node.
 
+
+## To configure the Open vSwitch (OVS) service
+# The OVS service provides the underlying virtual networking framework for instances.
+# Restart the OVS service:
+service openvswitch-switch restart
+
+## To configure Compute to use Networking
+
+# By default, distribution packages configure Compute to use legacy networking. You must
+# reconfigure Compute to manage networks through Networking.
+
+cp -p ../nova_compute/nova.conf /etc/nova/nova.conf
+
+# Edit the /etc/nova/nova.conf file and complete the following actions:
+
+# In the [DEFAULT] section, configure the APIs and drivers:
+
+# [DEFAULT]
+# ...
+# network_api_class = nova.network.neutronv2.api.API
+# security_group_api = neutron
+# linuxnet_interface_driver = nova.network.linux_net.
+# LinuxOVSInterfaceDriver
+# firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+# In the [neutron] section, configure access parameters:
+
+# [neutron]
+# ...
+# url = http://controller:9696
+# auth_strategy = keystone
+# admin_auth_url = http://controller:35357/v2.0
+# admin_tenant_name = service
+# admin_username = neutron
+# admin_password = NEUTRON_PASS
+
+## To finalize the installation
+# Restart the Compute service:
+service nova-compute restart
+
+# Restart the Open vSwitch (OVS) agent:
+service neutron-plugin-openvswitch-agent restart
+
+
