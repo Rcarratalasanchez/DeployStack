@@ -193,6 +193,8 @@ glance image-list
 
 rm -rf /tmp/images/
 
+cd /tmp
+
 wget http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
 
 glance image-create --name "trusty-image" --file trusty-server-cloudimg-amd64-disk1.img --disk-format qcow2 --container-format bare --is-public True --progress

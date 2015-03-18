@@ -7,7 +7,7 @@ echo "# controller
 # network
 10.0.0.21 network
 # compute1
-10.0.0.31 compute1" > /etc/hosts
+10.0.0.31 compute1" >> /etc/hosts
 
 apt-get install -y ubuntu-cloud-keyring
 echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu" \
@@ -19,3 +19,4 @@ apt-get install -y ntp
 service ntp restart
 ntpq -c peers
 
+cp -p admin-openrc.sh .
