@@ -27,3 +27,4 @@ nova image-list
 # | c56c5b39-c81d-4746-9e2e-dd495bd90199 | trusty-image        | ACTIVE |        |
 # +--------------------------------------+---------------------+--------+--------+
 
+# -> Go to controller/neutron/neutron.sh

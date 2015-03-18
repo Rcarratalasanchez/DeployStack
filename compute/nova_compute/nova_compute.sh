@@ -62,3 +62,4 @@ service nova-compute restart
 
 rm -f /var/lib/nova/nova.sqlite
 
+# -> Go to Controller/nova/nova_post.sh
