@@ -209,6 +209,8 @@ neutron ext-list
 # | dvr                   | Distributed Virtual Router                    |
 # +-----------------------+-----------------------------------------------+
 
+# -> Go to Network/preinstall/preinstall.sh
+
 #################################
 # Chapter 9 METADATA_NEUTRON    #
 #################################

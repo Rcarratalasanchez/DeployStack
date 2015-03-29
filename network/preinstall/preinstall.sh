@@ -7,7 +7,7 @@ echo "# controller
 # network
 10.0.0.21 network
 # compute1
-10.0.0.31 compute1" > /etc/hosts
+10.0.0.31 compute1" >> /etc/hosts
 
 apt-get install -y ubuntu-cloud-keyring
 echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu" \
@@ -31,3 +31,4 @@ ntpq -c peers
 # down ip link set dev $IFACE down
 
 # reboot
+
