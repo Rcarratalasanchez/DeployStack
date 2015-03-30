@@ -4,6 +4,8 @@
 
 cp -p /etc/sysctl.conf /etc/sysctl.conf.backup
 
+cp -p sysctl.conf /etc/sysctl.conf
+
 # Edit the /etc/sysctl.conf file to contain the following parameters:
 # net.ipv4.ip_forward=1
 # net.ipv4.conf.all.rp_filter=0
