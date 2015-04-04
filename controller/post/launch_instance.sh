@@ -61,7 +61,7 @@ $ nova secgroup-list
 # | ee7b3e4d-2ea5-4969-b463-7b44afeffd0e | default | default     |
 # +--------------------------------------+---------+-------------+
 
-nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64 --nic net-id=5e4bb236-1abf-43c6-92a8-17881b7d5f61 \
+nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64 --nic net-id=68299213-3c1d-4e3e-a2c5-e4e4b754c0ea \
 --security-group default --key-name demo-key demo-instance1
 # +--------------------------------------+------------------------------------------------------------+
 # | Property                             | Value                                                      |
@@ -132,3 +132,56 @@ neutron floatingip-create ext-net
 # +---------------------+--------------------------------------+
 
 nova floating-ip-associate demo-instance1 192.168.1.102
+
+ping 192.168.1.102
+
+ssh cirros@192.168.1.102
+
+# -> Go to controller/horizon/
+
+## TSHOOT 1:
+# # Delete Networks && Routers for change the openVS
+
+# source demo-openrc.sh
+
+# neutron router-port-list demo-router
+
+# neutron port-delete
+
+# neutron router-interface-delete demo-router demo-subnet
+
+# neutron router-delete demo-router
+
+# neutron subnet-delete demo-subnet
+
+# neutron net-delete demo-net
+
+# source admin-openrc.sh
+
+# neutron subnet-delete ext-subnet
+
+# neutron net-delete ext-net
+
+# # In network node...
+
+# ovs-vsctl del-port br-ex eth2
+
+# ovs-vsctl del-br br-ex
+
+## TSHOOT 2:
+
+# failed to allocate the network(s) not rescheduling. code 500
+
+# SOLVED:
+# https://ask.openstack.org/en/question/57342/spawning-new-instances-fails-to-allocate-the-network/
+
+# In compute node in nova.conf (in the DEFAULT SECTION)
+
+# #Fail instance boot if vif plugging fails
+# vif_plugging_is_fatal = False
+
+# #Number of seconds to wait for neutron vif
+# #plugging events to arrive before continuing or failing
+# #(see vif_plugging_is_fatal). If this is set to zero and
+# #vif_plugging_is_fatal is False, events should not be expected to arrive at all.
+# vif_plugging_timeout = 0

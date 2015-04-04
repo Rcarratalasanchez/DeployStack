@@ -213,7 +213,7 @@ ovs-vsctl add-br br-ex
 
 # Add a port to the external bridge that connects to the physical external network interface:
 # Replace INTERFACE_NAME with the actual interface name. For example, eth2 or ens256.
-ovs-vsctl add-port br-ex eth3
+ovs-vsctl add-port br-ex eth2
 
 # Restart the Networking services:
 

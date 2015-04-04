@@ -62,6 +62,8 @@ cp -p neutron.conf /etc/neutron/neutron.conf
 
 cp -p /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.backup
 
+cp -p ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini
+
 # The ML2 plug-in uses the Open vSwitch (OVS) mechanism (agent) to build the virtual net-
 # working framework for instances.
 

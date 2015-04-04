@@ -67,7 +67,7 @@ neutron subnet-create ext-net --name ext-subnet \
 
 # To create the tenant network
 
-# source demo-openrc.sh
+source demo-openrc.sh
 
 # Create the network:
 neutron net-create demo-net

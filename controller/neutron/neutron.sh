@@ -167,7 +167,7 @@ cp -p ../nova/nova.conf /etc/nova/nova.conf
 # url = http://controller:9696
 # auth_strategy = keystone
 # admin_auth_url = http://controller:35357/v2.0
-# admin_tenant_name = service
+# admin_tenant_namneutron net-delete ext-nete = service
 # admin_username = neutron
 # admin_password = NEUTRON_PASS
 
@@ -185,7 +185,7 @@ service nova-conductor restart
 service neutron-server restart
 
 ## Verify operation:
-source admin-openrc
+source admin-openrneutron net-delete ext-netc
 
 neutron ext-list
 # +-----------------------+-----------------------------------------------+
