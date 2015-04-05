@@ -137,8 +137,6 @@ ping 192.168.1.102
 
 ssh cirros@192.168.1.102
 
-# -> Go to controller/horizon/
-
 ## TSHOOT 1:
 # # Delete Networks && Routers for change the openVS
 
@@ -185,3 +183,13 @@ ssh cirros@192.168.1.102
 # #(see vif_plugging_is_fatal). If this is set to zero and
 # #vif_plugging_is_fatal is False, events should not be expected to arrive at all.
 # vif_plugging_timeout = 0
+
+## TSHOOT 
+# Error in metadata agent! 
+# 2014-08-06 10:25:56,664 - util.py[WARNING]: 'http://169.254.169.254/2009-04-04/meta-data/instance-id' failed [2/120s]: http error [500]
+
+# SOLVE:
+# https://ask.openstack.org/en/question/44365/neutron-metadata-agent-unexpected-error/
+# https://ask.openstack.org/en/question/30466/neutron-metadata-agent-could-not-find-service-or-region/
+
+# -> Go to controller/horizon/horizon.sh 
