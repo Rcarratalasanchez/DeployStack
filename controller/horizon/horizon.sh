@@ -1,14 +1,16 @@
+#######################
+# Chapter 14 HORIZON  #
+#######################
 
-################################
-# Chapter 13 LAUNCH_INSTANCE   #
-################################
-# Install the packages:
-apt-get install -y openstack-dashboard apache2 libapache2-mod-wsgi \
+apt-get -y install openstack-dashboard apache2 libapache2-mod-wsgi \
 memcached python-memcache
 
 cp -p /etc/openstack-dashboard/local_settings.py /etc/openstack-dashboard/local_settings.py.backup
 
-# Edit /etc/openstack-dashboard/local_settings.py
+cp -p local_settings.py /etc/openstack-dashboard/local_settings.py
+
+# Edit the /etc/openstack-dashboard/local_settings.py file and complete
+# the following actions:
 
 # Configure the dashboard to use OpenStack services on the controller node:
 # OPENSTACK_HOST = "controller"
@@ -25,6 +27,6 @@ cp -p /etc/openstack-dashboard/local_settings.py /etc/openstack-dashboard/local_
 # }
 # }
 
-# Optionally, configure the time zone:
-# TIME_ZONE = "TIME_ZONE"
-
+# Restart the web server and session storage service:
+service apache2 restart
+service memcached restart

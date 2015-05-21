@@ -2,6 +2,9 @@
 # Chapter 0 PREINSTALL  #
 #########################
 
+# Make a directory for the installation
+mkdir -p /opt/deploystack
+
 ## Network
 
 echo "# controller

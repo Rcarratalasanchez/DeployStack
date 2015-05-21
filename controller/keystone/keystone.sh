@@ -264,7 +264,7 @@ keystone --os-tenant-name demo --os-username demo --os-password DEMO_PASS \
 # Port 5000 is for normal user functions and is the most commonly used.
 
 ## Add admin-openrc.sh and demo-openrc.sh
-sudo cp -p admin-openrc.sh /home/vagrant
-sudo cp -p demo-openrc.sh /home/vagrant
+sudo cp -p admin-openrc.sh /opt/deploystack
+sudo cp -p demo-openrc.sh /opt/deploystack
 
 # -> controller/glance.sh

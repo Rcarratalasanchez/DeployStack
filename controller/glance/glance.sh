@@ -25,7 +25,7 @@ mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'
 mysql -uroot -p$MYSQL_ROOT_PASS -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '$MYSQL_GLANCE_PASS';"
 mysql -uroot -p$MYSQL_ROOT_PASS -e "SHOW GRANTS FOR glance"
 
-source admin-openrc.sh
+source /opt/deploystack/admin-openrc.sh
 
 # Create the service credentials
 
@@ -157,7 +157,7 @@ rm -f /var/lib/glance/glance.sqlite
 
 mkdir /tmp/images
 cd /tmp/images
-wget http://cdn.download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img
+wget http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img
 
 glance image-create --name "cirros-0.3.3-x86_64" --file cirros-0.3.3-x86_64-disk.img \
 --disk-format qcow2 --container-format bare --is-public True --progress
